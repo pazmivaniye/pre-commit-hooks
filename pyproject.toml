@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pre-commit-hooks"
+version = "1.0.0"
+description = "Some simple hooks for pre-commit"
+readme = "README.md"
+requires-python = ">=3.0.0"
+authors = [{name = "Benjamin Reifler"}]
+dependencies = []
+license = "MIT"
+license-files = ["LICENSE"]
+
+[project.scripts]
+check-chars = "check_chars:main"
+check-filenames = "check_filenames:main"
+check-line-length = "check_line_length:main"

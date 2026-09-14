@@ -1,19 +1,19 @@
 - id: check-filenames
   name: check filenames
   description: Check for unsafe filenames
-  entry: check_filenames.py
+  entry: check-filenames
   language: python
 - id: check-chars
   name: check chars
   description: Mark lines containing invalid characters
-  entry: check_chars.py
+  entry: check-chars
   language: python
   types:
     - text
 - id: check-line-length
   name: check line length
-  description: Mark lines greater than 80 columns
-  entry: check-line-length.sh
-  language: system
+  description: Mark lines longer than 80 characters
+  entry: check-line-length
+  language: python
   types:
     - text

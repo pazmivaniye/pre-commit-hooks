@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
 import re
+import signal
 import sys
+
+if sys.platform != 'win32':
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 pattern = '([^ -~]|[][<>:"\\\\\\|?*\\(\\)\'`\\s])'
 
