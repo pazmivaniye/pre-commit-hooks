@@ -28,6 +28,8 @@ repos:
         language: system
         types:
           - text
+        exclude_types:
+          - makefile
       - id: check-filenames
         name: check filenames
         description: Check for unsafe filenames
@@ -40,3 +42,12 @@ repos:
         language: system
         types:
           - text
+      - id: fix-leading-spaces
+        name: fix leading spaces
+        description: Make sure that each line begins with a multiple of 4 spaces
+        entry: src/fix_leading_spaces.py
+        language: system
+        types:
+          - text
+        exclude_types:
+          - yaml

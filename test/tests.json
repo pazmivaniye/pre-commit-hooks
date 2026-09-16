@@ -12,5 +12,8 @@
     "check_line_length": {
         "should_fail.txt": "\t\t\t\t\t\t\t\t\t\ta\n",
         "should_succeed.txt": "\t\t\t\t\t\t\t\t\t\t\n"
+    },
+    "fix_leading_spaces": {
+        "needs_fix.txt": "asdf\n    a\n     b\n"
     }
 }

@@ -17,3 +17,4 @@ license-files = ["LICENSE"]
 check-chars = "check_chars:main"
 check-filenames = "check_filenames:main"
 check-line-length = "check_line_length:main"
+fix-leading-spaces = "fix_leading_spaces:main"

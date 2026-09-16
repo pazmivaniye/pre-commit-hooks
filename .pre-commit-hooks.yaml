@@ -5,6 +5,8 @@
   language: python
   types:
     - text
+  exclude_types:
+    - makefile
 - id: check-filenames
   name: check filenames
   description: Check for unsafe filenames
@@ -17,3 +19,12 @@
   language: python
   types:
     - text
+- id: fix-leading-spaces
+  name: fix leading spaces
+  description: Make sure that each line begins with a multiple of 4 spaces
+  entry: fix-leading-spaces
+  language: python
+  types:
+    - text
+  exclude_types:
+    - yaml
