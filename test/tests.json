@@ -1,0 +1,16 @@
+{
+    "check_chars": {
+        "should_fail.txt": "asdf\u2122asdf\n",
+        "should_succeed.txt": "asdf\nasdf\n"
+    },
+    "check_filenames": {
+        "should_fail .txt": null,
+        "should_fail.txt.": null,
+        "should_fail\u2122.txt": null,
+        "should_succeed-asdf": null
+    },
+    "check_line_length": {
+        "should_fail.txt": "\t\t\t\t\t\t\t\t\t\ta\n",
+        "should_succeed.txt": "\t\t\t\t\t\t\t\t\t\t\n"
+    }
+}

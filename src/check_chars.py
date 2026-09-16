@@ -26,10 +26,10 @@ def filter(c):
         return '\\u%04x'%(ord(c))
     return '\\U%08x'%(ord(c))
 
-def main(argv):
+def main(args = []):
     failed = False
-    for i in range(1, len(argv)):
-        with open(argv[i]) as inFile:
+    for arg in args:
+        with open(arg) as inFile:
             num = 0
             for line in inFile:
                 num += 1
@@ -37,8 +37,8 @@ def main(argv):
                 if re.search('[^ -~]', line):
                     failed = True
                     line = ''.join(filter(n) for n in line)
-                    print('%s:%i:%s'%(argv[i], num, line), file = sys.stderr,
-                        flush = True)
+                    print('%s:%i:%s'%(arg, num, line), file = sys.stderr, flush
+                        = True)
     if failed:
         exit(1)
 
@@ -48,4 +48,4 @@ if __name__ == '__main__':
     if sys.platform != 'win32':
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-    main(sys.argv)
+    main(sys.argv[1:])

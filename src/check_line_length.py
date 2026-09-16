@@ -5,10 +5,10 @@ import sys
 maxLen = 80
 tabLen = 8
 
-def main(argv):
+def main(args = []):
     failed = False
-    for i in range(1, len(argv)):
-        with open(argv[i]) as inFile:
+    for arg in args:
+        with open(arg) as inFile:
             num = 0
             for line in inFile:
                 num += 1
@@ -25,8 +25,8 @@ def main(argv):
                         if len(line) > maxLen + 3:
                             fmt += '...'
                             line = line[0:maxLen]
-                        print(fmt%(argv[i], num, line), file = sys.stderr, flush
-                            = True)
+                        print(fmt%(arg, num, line), file = sys.stderr, flush =
+                            True)
                         break
     if failed:
         exit(1)
@@ -37,4 +37,4 @@ if __name__ == '__main__':
     if sys.platform != 'win32':
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-    main(sys.argv)
+    main(sys.argv[1:])

@@ -7,23 +7,35 @@ repos:
       - id: check-added-large-files
       - id: check-case-conflict
       - id: check-executables-have-shebangs
+      - id: check-json
       - id: check-shebang-scripts-are-executable
       - id: check-toml
       - id: check-yaml
   - repo: local
     hooks:
+      - id: test
+        name: test
+        description: Run test program
+        entry: test/test.py
+        language: system
+        pass_filenames: false
+        always_run: true
+        fail_fast: true
       - id: check-chars
         name: check chars
+        description: Mark lines containing invalid characters
         entry: src/check_chars.py
         language: system
         types:
           - text
       - id: check-filenames
         name: check filenames
+        description: Check for unsafe filenames
         entry: src/check_filenames.py
         language: system
       - id: check-line-length
         name: check line length
+        description: Mark lines longer than 80 characters
         entry: src/check_line_length.py
         language: system
         types:

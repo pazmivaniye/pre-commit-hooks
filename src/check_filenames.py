@@ -15,12 +15,12 @@ def filter(c):
         return c
     return '?'
 
-def main(argv):
+def main(args = []):
     failed = False
-    for i in range(1, len(argv)):
-        if check(argv[i]):
+    for arg in args:
+        if check(arg):
             failed = True
-            name = ''.join(filter(n) for n in argv[i])
+            name = ''.join(filter(n) for n in arg)
             print(name, file = sys.stderr, flush = True)
     if failed:
         exit(1)
@@ -31,4 +31,4 @@ if __name__ == '__main__':
     if sys.platform != 'win32':
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-    main(sys.argv)
+    main(sys.argv[1:])
