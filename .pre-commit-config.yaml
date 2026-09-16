@@ -10,3 +10,21 @@ repos:
       - id: check-shebang-scripts-are-executable
       - id: check-toml
       - id: check-yaml
+  - repo: local
+    hooks:
+      - id: check-chars
+        name: check chars
+        entry: src/check_chars.py
+        language: system
+        types:
+          - text
+      - id: check-filenames
+        name: check filenames
+        entry: src/check_filenames.py
+        language: system
+      - id: check-line-length
+        name: check line length
+        entry: src/check_line_length.py
+        language: system
+        types:
+          - text

@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 
 import re
-import signal
 import sys
-
-if sys.platform != 'win32':
-    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 pattern = '([^ -~]|[][<>:"\\\\\\|?*\\(\\)\'`\\s])'
 
@@ -19,15 +15,20 @@ def filter(c):
         return c
     return '?'
 
-def main():
+def main(argv):
     failed = False
-    for i in range(1, len(sys.argv)):
-        if check(sys.argv[i]):
+    for i in range(1, len(argv)):
+        if check(argv[i]):
             failed = True
-            name = ''.join(filter(n) for n in sys.argv[i])
+            name = ''.join(filter(n) for n in argv[i])
             print(name, file = sys.stderr, flush = True)
     if failed:
         exit(1)
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    import signal
+
+    if sys.platform != 'win32':
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+    main(sys.argv)
