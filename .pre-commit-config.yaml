@@ -13,6 +13,16 @@ repos:
       - id: check-yaml
   - repo: local
     hooks:
+      - id: mypy
+        name: mypy
+        description: Run static code analyzer
+        entry: mypy
+        language: system
+        pass_filenames: false
+        always_run: true
+        args:
+          - test
+          - src
       - id: test
         name: test
         description: Run test program

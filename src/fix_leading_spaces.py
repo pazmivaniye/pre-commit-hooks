@@ -7,18 +7,24 @@ import sys
 modulus = 4
 tabLen = 8
 
-def main(args: list[str] = []) -> int:
+def cout(msg: str) -> None:
+    print(msg, flush = True)
+
+def main(args: list[str] | None = None) -> int:
+    if args is None:
+        args = sys.argv[1:]
     if not args:
         return 0
     if args[0] in ['-v', '--verbose']:
         verbose = True
         paths = args[1:]
+        cout('Checking %i files for simple indentation issues'%(len(paths)))
     else:
         verbose = False
         paths = args
     for path in paths:
         if verbose:
-            print('Checking "%s"'%(path), flush = True)
+            cout('Checking "%s"'%(path))
         with open(path) as inFile:
             contents = inFile.read()
         matched = False
@@ -29,7 +35,7 @@ def main(args: list[str] = []) -> int:
         if not matched:
             continue
         if verbose:
-            print('Fixing "%s"'%(path), flush = True)
+            cout('Fixing "%s"'%(path))
         with open(path, 'w') as outFile:
             for line in io.StringIO(contents):
                 spaces = re.match('^\\s+', line.rstrip('\n'))
@@ -49,4 +55,4 @@ if __name__ == '__main__':
     if sys.platform != 'win32':
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-    sys.exit(main(sys.argv[1:]))
+    sys.exit(main())

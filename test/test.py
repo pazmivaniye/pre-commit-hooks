@@ -11,7 +11,9 @@ def cout(msg: str) -> None:
 def cerr(msg: str) -> None:
     print(msg, file = sys.stderr, flush = True)
 
-def main(args: list[str] = []) -> int:
+def main(args: list[str] | None = None) -> int:
+    if args is None:
+        args = sys.argv[1:]
     if args:
         cerr('Error: This program does not accept arguments.')
         return 1
@@ -57,4 +59,9 @@ def main(args: list[str] = []) -> int:
     return 0
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv[1:]))
+    import signal
+
+    if sys.platform != 'win32':
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+    sys.exit(main())

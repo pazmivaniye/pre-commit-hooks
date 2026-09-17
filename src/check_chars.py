@@ -26,19 +26,28 @@ def filter(c: str) -> str:
         return '\\u%04x'%(ord(c))
     return '\\U%08x'%(ord(c))
 
-def main(args: list[str] = []) -> int:
+def cout(msg: str) -> None:
+    print(msg, flush = True)
+
+def cerr(msg: str) -> None:
+    print(msg, file = sys.stderr, flush = True)
+
+def main(args: list[str] | None = None) -> int:
+    if args is None:
+        args = sys.argv[1:]
     if not args:
         return 0
     if args[0] in ['-v', '--verbose']:
         verbose = True
         paths = args[1:]
+        cout('Checking %i files for invalid characters'%(len(paths)))
     else:
         verbose = False
         paths = args
     failed = False
     for path in paths:
         if verbose:
-            print('Checking "%s"'%(path), flush = True)
+            cout('Checking "%s"'%(path))
         with open(path) as inFile:
             num = 0
             for line in inFile:
@@ -47,8 +56,7 @@ def main(args: list[str] = []) -> int:
                 if re.search('[^ -~]', line):
                     failed = True
                     line = ''.join(filter(n) for n in line)
-                    print('%s:%i:%s'%(path, num, line), file = sys.stderr, flush
-                        = True)
+                    cerr('%s:%i:%s'%(path, num, line))
     return int(failed)
 
 if __name__ == '__main__':
@@ -57,4 +65,4 @@ if __name__ == '__main__':
     if sys.platform != 'win32':
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-    sys.exit(main(sys.argv[1:]))
+    sys.exit(main())
