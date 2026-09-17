@@ -5,7 +5,17 @@ import json
 import pathlib
 import sys
 
+def cout(msg: str) -> None:
+    print(msg, flush = True)
+
+def cerr(msg: str) -> None:
+    print(msg, file = sys.stderr, flush = True)
+
 def main(args: list[str] = []) -> int:
+    if args:
+        cerr('Error: This program does not accept arguments.')
+        return 1
+
     testDir = pathlib.Path(__file__).parent.resolve()
     rootDir = testDir.parent
     srcDir = rootDir / 'src'
@@ -15,19 +25,31 @@ def main(args: list[str] = []) -> int:
         tests = json.load(inFile)
 
     tempDir = testDir / 'temp'
+    cout('Creating "%s"'%(tempDir))
     tempDir.mkdir(exist_ok = True)
 
     for scriptName in tests:
+        cout('Testing hook %s'%(scriptName))
         module = importlib.import_module(scriptName)
         paths = []
-        for fileName in tests[scriptName]:
+        for fileName in tests[scriptName]['files']:
             paths.append(tempDir / fileName)
-            if tests[scriptName][fileName] is not None:
+            if tests[scriptName]['files'][fileName] is not None:
+                cout('Creating "%s"'%(paths[-1]))
                 with open(paths[-1], 'w') as outFile:
-                    outFile.write(tests[scriptName][fileName])
-        ret = module.main(['-v'] + [str(n) for n in paths])
-        print('%s returned %i'%(scriptName, ret), flush = True)
+                    outFile.write(tests[scriptName]['files'][fileName])
+        try:
+            ret = module.main(['-v'] + [str(n) for n in paths])
+        except Exception as e:
+            cerr('Error: Uncaught exception in hook %s: %s'%(scriptName, e))
+            return 1
+        else:
+            if ret != tests[scriptName]['ret']:
+                cerr('Error: Expected return value %i for hook %s but got %i.'%(
+                    tests[scriptName]['ret'], scriptName, ret))
+                return 1
 
+    cout('Removing "%s"'%(tempDir))
     for n in tempDir.iterdir():
         n.unlink()
     tempDir.rmdir()

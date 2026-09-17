@@ -34,9 +34,9 @@ def main(args: list[str] = []) -> int:
             for line in io.StringIO(contents):
                 spaces = re.match('^\\s+', line.rstrip('\n'))
                 if spaces:
-                    spaces = spaces.group()
-                    numChars = len(spaces)
-                    numSpaces = sum(tabLen if n == '\t' else 1 for n in spaces)
+                    numChars = len(spaces.group())
+                    numSpaces = sum(tabLen if n == '\t' else 1 for n in spaces.
+                        group())
                     if numSpaces%modulus:
                         numSpaces = int(round(numSpaces/modulus))*modulus
                     line = ' '*numSpaces + line[numChars:]

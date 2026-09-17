@@ -1,19 +1,31 @@
 {
     "check_chars": {
-        "should_fail.txt": "asdf\u2122asdf\n",
-        "should_succeed.txt": "asdf\nasdf\n"
+        "files": {
+            "should_fail.txt": "asdf\u2122asdf\n",
+            "should_succeed.txt": "asdf\nasdf\n"
+        },
+        "ret": 1
     },
     "check_filenames": {
-        "should_fail .txt": null,
-        "should_fail.txt.": null,
-        "should_fail\u2122.txt": null,
-        "should_succeed-asdf": null
+        "files": {
+            "should_fail .txt": null,
+            "should_fail.txt.": null,
+            "should_fail\u2122.txt": null,
+            "should_succeed-asdf": null
+        },
+        "ret": 1
     },
     "check_line_length": {
-        "should_fail.txt": "\t\t\t\t\t\t\t\t\t\ta\n",
-        "should_succeed.txt": "\t\t\t\t\t\t\t\t\t\t\n"
+        "files": {
+            "should_fail.txt": "\t\t\t\t\t\t\t\t\t\ta\n",
+            "should_succeed.txt": "\t\t\t\t\t\t\t\t\t\t\n"
+        },
+        "ret": 1
     },
     "fix_leading_spaces": {
-        "needs_fix.txt": "asdf\n    a\n     b\n"
+        "files": {
+            "needs_fix.txt": "asdf\n    a\n     b\n"
+        },
+        "ret": 0
     }
 }
