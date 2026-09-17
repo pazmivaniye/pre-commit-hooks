@@ -28,13 +28,13 @@ repos:
         language: system
         types:
           - text
-        exclude_types:
-          - makefile
       - id: check-filenames
         name: check filenames
         description: Check for unsafe filenames
         entry: src/check_filenames.py
         language: system
+        types:
+          - file
       - id: check-line-length
         name: check line length
         description: Mark lines longer than 80 characters

@@ -12,6 +12,8 @@
   description: Check for unsafe filenames
   entry: check-filenames
   language: python
+  types:
+    - file
 - id: check-line-length
   name: check line length
   description: Mark lines longer than 80 characters
