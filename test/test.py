@@ -5,7 +5,7 @@ import json
 import pathlib
 import sys
 
-def main(args = []):
+def main(args: list[str] = []) -> int:
     testDir = pathlib.Path(__file__).parent.resolve()
     rootDir = testDir.parent
     srcDir = rootDir / 'src'
@@ -25,14 +25,14 @@ def main(args = []):
             if tests[scriptName][fileName] is not None:
                 with open(paths[-1], 'w') as outFile:
                     outFile.write(tests[scriptName][fileName])
-        try:
-            module.main([str(n) for n in paths])
-        except SystemExit as e:
-            pass
+        ret = module.main(['-v'] + [str(n) for n in paths])
+        print('%s returned %i'%(scriptName, ret), flush = True)
 
     for n in tempDir.iterdir():
         n.unlink()
     tempDir.rmdir()
 
+    return 0
+
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    sys.exit(main(sys.argv[1:]))
