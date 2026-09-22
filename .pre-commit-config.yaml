@@ -21,6 +21,7 @@ repos:
         pass_filenames: false
         always_run: true
         args:
+          - --strict
           - test
           - src
       - id: test
