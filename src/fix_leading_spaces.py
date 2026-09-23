@@ -50,9 +50,7 @@ def main(args: list[str] | None = None) -> int:
     return 0
 
 if __name__ == '__main__':
-    import signal
-
     if sys.platform != 'win32':
+        import signal
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-
     sys.exit(main())

@@ -44,9 +44,7 @@ def main(args: list[str] | None = None) -> int:
     return int(failed)
 
 if __name__ == '__main__':
-    import signal
-
     if sys.platform != 'win32':
+        import signal
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-
     sys.exit(main())
