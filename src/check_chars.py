@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+'''Mark lines containing invalid characters'''
 
 import re
 import sys

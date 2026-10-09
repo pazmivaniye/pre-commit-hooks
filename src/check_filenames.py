@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+'''Check for unsafe filenames'''
 
 import re
 import sys

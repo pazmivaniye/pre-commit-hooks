@@ -22,6 +22,13 @@
         },
         "ret": 1
     },
+    "check_python_quotes": {
+        "files": {
+            "should_fail.txt": "s = \"asdf\"\n",
+            "should_succeed.txt": "s = 'asdf'\n"
+        },
+        "ret": 1
+    },
     "fix_leading_spaces": {
         "files": {
             "needs_fix.txt": "asdf\n    a\n     b\n"

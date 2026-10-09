@@ -21,6 +21,13 @@
   language: python
   types:
     - text
+- id: check-python-quotes
+  name: check python quotes
+  description: Check for use of double quotes for Python string literals
+  entry: check-python-quotes
+  language: python
+  types:
+    - python
 - id: fix-leading-spaces
   name: fix leading spaces
   description: Make sure that each line begins with a multiple of 4 spaces

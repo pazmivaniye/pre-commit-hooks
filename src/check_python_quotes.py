@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-'''Mark lines longer than 80 characters'''
+'''Check for use of double quotes for Python string literals'''
 
+import re
 import sys
-
-maxLen = 80
-tabLen = 8
 
 def cout(msg: str) -> None:
     print(msg, flush = True)
@@ -20,7 +18,8 @@ def main(args: list[str] | None = None) -> int:
     if args[0] in ['-v', '--verbose']:
         verbose = True
         paths = args[1:]
-        cout('Checking %i files for overlong lines'%(len(paths)))
+        cout('Checking %i files for string literals in double quotes'%(len(
+            paths)))
     else:
         verbose = False
         paths = args
@@ -32,21 +31,17 @@ def main(args: list[str] | None = None) -> int:
             num = 0
             for line in inFile:
                 num += 1
-                line = line[0:-1]
-                curLen = 0
-                for n in line:
-                    if n == '\t':
-                        curLen += tabLen
-                    else:
-                        curLen += 1
-                    if curLen > maxLen:
-                        failed = True
-                        fmt = '%s:%i:%s'
-                        if len(line) > maxLen + 3:
-                            fmt += '...'
-                            line = line[0:maxLen]
-                        cerr(fmt%(path, num, line))
-                        break
+                line = line.rstrip('\n')
+                if not line or re.match('\\s*#', line):
+                    continue
+                line = re.sub('\\s#.*$', '', line)
+                firstDouble = line.find('\"')
+                if firstDouble < 0:
+                    continue
+                firstSingle = line.find('\'')
+                if firstSingle < 0 or firstSingle > firstDouble:
+                    failed = True
+                    cerr('%s:%i: %s'%(path, num, line))
     return int(failed)
 
 if __name__ == '__main__':
