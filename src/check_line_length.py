@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-'''Mark lines longer than 80 characters'''
+"""Mark lines longer than 80 characters"""
+
+__all__ = ['main']
 
 import sys
 

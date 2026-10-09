@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
-'''Check for use of double quotes for Python string literals'''
+"""Check for use of double quotes for Python string literals
+
+Does not flag double quotes for docstrings because PEP 257 recommends them
+to differentiate from literal strings.
+"""
+
+__all__ = ['main']
 
 import re
 import sys
+
+ignorePattern = '\\s*(#|""")'
 
 def cout(msg: str) -> None:
     print(msg, flush = True)
@@ -32,7 +40,7 @@ def main(args: list[str] | None = None) -> int:
             for line in inFile:
                 num += 1
                 line = line.rstrip('\n')
-                if not line or re.match('\\s*#', line):
+                if not line or re.match(ignorePattern, line):
                     continue
                 line = re.sub('\\s#.*$', '', line)
                 firstDouble = line.find('\"')

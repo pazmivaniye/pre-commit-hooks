@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Run tests on each pre-commit hook"""
+
+__all__ = ['main']
 
 import importlib
 import json

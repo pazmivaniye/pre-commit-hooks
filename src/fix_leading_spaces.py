@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-'''Make sure that each line begins with a multiple of 4 spaces'''
+"""Make sure that each line begins with a multiple of 4 spaces"""
+
+__all__ = ['main']
 
 import io
 import re

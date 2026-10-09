@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-'''Check for unsafe filenames'''
+"""Check for unsafe filenames"""
+
+__all__ = ['main']
 
 import re
 import sys
