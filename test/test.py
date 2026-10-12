@@ -18,7 +18,7 @@ def main(args: list[str] | None = None) -> int:
     if args is None:
         args = sys.argv[1:]
     if args:
-        cerr('Error: This program does not accept arguments.')
+        cerr('ValueError: This program does not accept arguments.')
         return 1
 
     testDir = pathlib.Path(__file__).parent.resolve()
@@ -46,12 +46,13 @@ def main(args: list[str] | None = None) -> int:
         try:
             ret = module.main(['-v'] + [str(n) for n in paths])
         except Exception as e:
-            cerr('Error: Uncaught exception in hook %s: %s'%(scriptName, e))
+            cerr('%s: Uncaught exception in hook %s: %s'%(type(e).__name__,
+                scriptName, e))
             return 1
         else:
             if ret != tests[scriptName]['ret']:
-                cerr('Error: Expected return value %i for hook %s but got %i.'%(
-                    tests[scriptName]['ret'], scriptName, ret))
+                cerr('ValueError: Expected return value %i for hook %s but got '
+                    '%i.'%(tests[scriptName]['ret'], scriptName, ret))
                 return 1
 
     cout('Removing "%s"'%(tempDir))
