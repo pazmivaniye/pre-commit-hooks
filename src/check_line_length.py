@@ -3,33 +3,33 @@
 
 __all__ = ['main']
 
-import sys
+import sys as _sys
 
-maxLen = 80
-tabLen = 8
+_maxLen = 80
+_tabLen = 8
 
-def cout(msg: str) -> None:
+def _cout(msg: str) -> None:
     print(msg, flush = True)
 
-def cerr(msg: str) -> None:
-    print(msg, file = sys.stderr, flush = True)
+def _cerr(msg: str) -> None:
+    print(msg, file = _sys.stderr, flush = True)
 
 def main(args: list[str] | None = None) -> int:
     if args is None:
-        args = sys.argv[1:]
+        args = _sys.argv[1:]
     if not args:
         return 0
     if args[0] in ['-v', '--verbose']:
         verbose = True
         paths = args[1:]
-        cout('Checking %i files for overlong lines'%(len(paths)))
+        _cout('Checking %i files for overlong lines'%(len(paths)))
     else:
         verbose = False
         paths = args
     failed = False
     for path in paths:
         if verbose:
-            cout('Checking "%s"'%(path))
+            _cout('Checking "%s"'%(path))
         with open(path) as inFile:
             num = 0
             for line in inFile:
@@ -38,21 +38,21 @@ def main(args: list[str] | None = None) -> int:
                 curLen = 0
                 for n in line:
                     if n == '\t':
-                        curLen += tabLen
+                        curLen += _tabLen
                     else:
                         curLen += 1
-                    if curLen > maxLen:
+                    if curLen > _maxLen:
                         failed = True
                         fmt = '%s:%i:%s'
-                        if len(line) > maxLen + 3:
+                        if len(line) > _maxLen + 3:
                             fmt += '...'
-                            line = line[0:maxLen]
-                        cerr(fmt%(path, num, line))
+                            line = line[0:_maxLen]
+                        _cerr(fmt%(path, num, line))
                         break
     return int(failed)
 
 if __name__ == '__main__':
-    if sys.platform != 'win32':
+    if _sys.platform != 'win32':
         import signal
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-    sys.exit(main())
+    _sys.exit(main())

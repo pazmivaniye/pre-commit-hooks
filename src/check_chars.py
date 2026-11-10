@@ -3,10 +3,10 @@
 
 __all__ = ['main']
 
-import re
-import sys
+import re as _re
+import sys as _sys
 
-def filter(c: str) -> str:
+def _filter(c: str) -> str:
     if ' ' <= c <= '~':
         return c
     elif c == '\a':
@@ -29,41 +29,41 @@ def filter(c: str) -> str:
         return '\\u%04x'%(ord(c))
     return '\\U%08x'%(ord(c))
 
-def cout(msg: str) -> None:
+def _cout(msg: str) -> None:
     print(msg, flush = True)
 
-def cerr(msg: str) -> None:
-    print(msg, file = sys.stderr, flush = True)
+def _cerr(msg: str) -> None:
+    print(msg, file = _sys.stderr, flush = True)
 
 def main(args: list[str] | None = None) -> int:
     if args is None:
-        args = sys.argv[1:]
+        args = _sys.argv[1:]
     if not args:
         return 0
     if args[0] in ['-v', '--verbose']:
         verbose = True
         paths = args[1:]
-        cout('Checking %i files for invalid characters'%(len(paths)))
+        _cout('Checking %i files for invalid characters'%(len(paths)))
     else:
         verbose = False
         paths = args
     failed = False
     for path in paths:
         if verbose:
-            cout('Checking "%s"'%(path))
+            _cout('Checking "%s"'%(path))
         with open(path) as inFile:
             num = 0
             for line in inFile:
                 num += 1
                 line = line.rstrip('\n')
-                if re.search('[^ -~]', line):
+                if _re.search('[^ -~]', line):
                     failed = True
-                    line = ''.join(filter(n) for n in line)
-                    cerr('%s:%i:%s'%(path, num, line))
+                    line = ''.join(_filter(n) for n in line)
+                    _cerr('%s:%i:%s'%(path, num, line))
     return int(failed)
 
 if __name__ == '__main__':
-    if sys.platform != 'win32':
+    if _sys.platform != 'win32':
         import signal
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-    sys.exit(main())
+    _sys.exit(main())

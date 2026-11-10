@@ -3,51 +3,51 @@
 
 __all__ = ['main']
 
-import re
-import sys
+import re as _re
+import sys as _sys
 
-pattern = '([^ -~]|[][<>:"\\\\\\|?*\\(\\)\'`\\s])'
+_pattern = '([^ -~]|[][<>:"\\\\\\|?*\\(\\)\'`\\s])'
 
-def check(p: str) -> bool:
-    if p and (p[-1] == '.' or re.search(pattern, p)):
+def _check(p: str) -> bool:
+    if p and (p[-1] == '.' or _re.search(_pattern, p)):
         return True
     return False
 
-def filter(c: str) -> str:
+def _filter(c: str) -> str:
     if ' ' <= c <= '~':
         return c
     return '?'
 
-def cout(msg: str) -> None:
+def _cout(msg: str) -> None:
     print(msg, flush = True)
 
-def cerr(msg: str) -> None:
-    print(msg, file = sys.stderr, flush = True)
+def _cerr(msg: str) -> None:
+    print(msg, file = _sys.stderr, flush = True)
 
 def main(args: list[str] | None = None) -> int:
     if args is None:
-        args = sys.argv[1:]
+        args = _sys.argv[1:]
     if not args:
         return 0
     if args[0] in ['-v', '--verbose']:
         verbose = True
         paths = args[1:]
-        cout('Checking safety of %i filenames'%(len(paths)))
+        _cout('Checking safety of %i filenames'%(len(paths)))
     else:
         verbose = False
         paths = args
     failed = False
     for path in paths:
         if verbose:
-            cout('Checking "%s"'%(path))
-        if check(path):
+            _cout('Checking "%s"'%(path))
+        if _check(path):
             failed = True
-            name = ''.join(filter(n) for n in path)
-            cerr(name)
+            name = ''.join(_filter(n) for n in path)
+            _cerr(name)
     return int(failed)
 
 if __name__ == '__main__':
-    if sys.platform != 'win32':
+    if _sys.platform != 'win32':
         import signal
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-    sys.exit(main())
+    _sys.exit(main())
