@@ -1,12 +1,32 @@
 #!/usr/bin/env python3
-"""Mark lines containing invalid characters"""
+"""Mark lines containing invalid characters."""
 
 __all__ = ['main']
 
 import re as _re
 import sys as _sys
+import typing as _typing
 
-def _filter(c: str) -> str:
+def _filter(c: str, /) -> str:
+    """Encode a single non-ASCII/non-printing character as an escape sequence.
+
+    Parameters
+    ----------
+    c : str
+        Character to process.
+
+    Returns
+    -------
+    str
+        Input character if already valid or corresponding escape sequence.
+
+    Raises
+    ------
+    TypeError
+        If input is not a single character.
+    """
+    if not isinstance(c, str) or len(c) != 1:
+        raise TypeError('Expected a single character.')
     if ' ' <= c <= '~':
         return c
     elif c == '\a':
@@ -29,13 +49,39 @@ def _filter(c: str) -> str:
         return '\\u%04x'%(ord(c))
     return '\\U%08x'%(ord(c))
 
-def _cout(msg: str) -> None:
+def _cout(msg: str, /) -> None:
+    """Write to stdout and flush.
+
+    Parameters
+    ----------
+    msg : str
+        Message to write.
+    """
     print(msg, flush = True)
 
-def _cerr(msg: str) -> None:
+def _cerr(msg: str, /) -> None:
+    """Write to stderr and flush.
+
+    Parameters
+    ----------
+    msg : str
+        Message to write.
+    """
     print(msg, file = _sys.stderr, flush = True)
 
-def main(args: list[str] | None = None) -> int:
+def main(args: _typing.Sequence[str] | None = None, /) -> int:
+    """Run main.
+
+    Parameters
+    ----------
+    args : Sequence[str] | None
+        Command-line argument overrides. Defaults to `None`.
+
+    Returns
+    -------
+    int
+        Zero on success, nonzero on failure.
+    """
     if args is None:
         args = _sys.argv[1:]
     if not args:

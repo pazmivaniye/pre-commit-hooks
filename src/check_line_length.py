@@ -1,20 +1,47 @@
 #!/usr/bin/env python3
-"""Mark lines longer than 80 characters"""
+"""Mark lines longer than 80 characters."""
 
 __all__ = ['main']
 
 import sys as _sys
+import typing as _typing
 
 _maxLen = 80
 _tabLen = 8
 
-def _cout(msg: str) -> None:
+def _cout(msg: str, /) -> None:
+    """Write to stdout and flush.
+
+    Parameters
+    ----------
+    msg : str
+        Message to write.
+    """
     print(msg, flush = True)
 
-def _cerr(msg: str) -> None:
+def _cerr(msg: str, /) -> None:
+    """Write to stderr and flush.
+
+    Parameters
+    ----------
+    msg : str
+        Message to write.
+    """
     print(msg, file = _sys.stderr, flush = True)
 
-def main(args: list[str] | None = None) -> int:
+def main(args: _typing.Sequence[str] | None = None, /) -> int:
+    """Run main.
+
+    Parameters
+    ----------
+    args : Sequence[str] | None
+        Command-line argument overrides. Defaults to `None`.
+
+    Returns
+    -------
+    int
+        Zero on success, nonzero on failure.
+    """
     if args is None:
         args = _sys.argv[1:]
     if not args:

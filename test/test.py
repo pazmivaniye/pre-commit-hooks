@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run tests on each pre-commit hook"""
+"""Run tests on each pre-commit hook."""
 
 __all__ = ['main']
 
@@ -7,14 +7,41 @@ import importlib as _importlib
 import json as _json
 import pathlib as _pathlib
 import sys as _sys
+import typing as _typing
 
-def _cout(msg: str) -> None:
+def _cout(msg: str, /) -> None:
+    """Write to stdout and flush.
+
+    Parameters
+    ----------
+    msg : str
+        Message to write.
+    """
     print(msg, flush = True)
 
-def _cerr(msg: str) -> None:
+def _cerr(msg: str, /) -> None:
+    """Write to stderr and flush.
+
+    Parameters
+    ----------
+    msg : str
+        Message to write.
+    """
     print(msg, file = _sys.stderr, flush = True)
 
-def main(args: list[str] | None = None) -> int:
+def main(args: _typing.Sequence[str] | None = None, /) -> int:
+    """Run main.
+
+    Parameters
+    ----------
+    args : Sequence[str] | None
+        Command-line argument overrides. Defaults to `None`.
+
+    Returns
+    -------
+    int
+        Zero on success, nonzero on failure.
+    """
     if args is None:
         args = _sys.argv[1:]
     if args:

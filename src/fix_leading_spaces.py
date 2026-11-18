@@ -1,19 +1,49 @@
 #!/usr/bin/env python3
-"""Make sure that each line begins with a multiple of 4 spaces"""
+"""Make sure that each line begins with a multiple of 4 spaces."""
 
 __all__ = ['main']
 
 import io as _io
 import re as _re
 import sys as _sys
+import typing as _typing
 
 _modulus = 4
 _tabLen = 8
 
-def _cout(msg: str) -> None:
+def _cout(msg: str, /) -> None:
+    """Write to stdout and flush.
+
+    Parameters
+    ----------
+    msg : str
+        Message to write.
+    """
     print(msg, flush = True)
 
-def main(args: list[str] | None = None) -> int:
+def _cerr(msg: str, /) -> None:
+    """Write to stderr and flush.
+
+    Parameters
+    ----------
+    msg : str
+        Message to write.
+    """
+    print(msg, file = _sys.stderr, flush = True)
+
+def main(args: _typing.Sequence[str] | None = None, /) -> int:
+    """Run main.
+
+    Parameters
+    ----------
+    args : Sequence[str] | None
+        Command-line argument overrides. Defaults to `None`.
+
+    Returns
+    -------
+    int
+        Zero on success, nonzero on failure.
+    """
     if args is None:
         args = _sys.argv[1:]
     if not args:

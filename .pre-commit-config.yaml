@@ -14,13 +14,33 @@ repos:
       - id: mixed-line-ending
   - repo: local
     hooks:
+      - id: flake8
+        name: flake8
+        description: Run style checker
+        entry: flake8
+        language: system
+        types:
+          - python
+        args:
+          - --max-line-length=80
+          - --extend-ignore=E128,E228,E251,E302,E305
+          - --docstring-convention=numpy
+      - id: dead
+        name: dead
+        description: Check for unused code
+        entry: dead
+        language: system
+        pass_filenames: false
+        types:
+          - python
       - id: mypy
         name: mypy
-        description: Run static code analyzer
+        description: Run type checker
         entry: mypy
         language: system
         pass_filenames: false
-        always_run: true
+        types:
+          - python
         args:
           - --python-version
           - "3.14"

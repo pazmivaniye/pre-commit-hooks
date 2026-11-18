@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check for use of double quotes for Python string literals
+"""Check for use of double quotes for Python string literals.
 
 Does not flag double quotes for docstrings because PEP 257 recommends them
 to differentiate from literal strings.
@@ -9,16 +9,43 @@ __all__ = ['main']
 
 import re as _re
 import sys as _sys
+import typing as _typing
 
 _ignorePattern = '\\s*(#|""")'
 
-def _cout(msg: str) -> None:
+def _cout(msg: str, /) -> None:
+    """Write to stdout and flush.
+
+    Parameters
+    ----------
+    msg : str
+        Message to write.
+    """
     print(msg, flush = True)
 
-def _cerr(msg: str) -> None:
+def _cerr(msg: str, /) -> None:
+    """Write to stderr and flush.
+
+    Parameters
+    ----------
+    msg : str
+        Message to write.
+    """
     print(msg, file = _sys.stderr, flush = True)
 
-def main(args: list[str] | None = None) -> int:
+def main(args: _typing.Sequence[str] | None = None, /) -> int:
+    """Run main.
+
+    Parameters
+    ----------
+    args : Sequence[str] | None
+        Command-line argument overrides. Defaults to `None`.
+
+    Returns
+    -------
+    int
+        Zero on success, nonzero on failure.
+    """
     if args is None:
         args = _sys.argv[1:]
     if not args:
