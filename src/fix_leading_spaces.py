@@ -22,16 +22,6 @@ def _cout(msg: str, /) -> None:
     """
     print(msg, flush = True)
 
-def _cerr(msg: str, /) -> None:
-    """Write to stderr and flush.
-
-    Parameters
-    ----------
-    msg : str
-        Message to write.
-    """
-    print(msg, file = _sys.stderr, flush = True)
-
 def main(args: _typing.Sequence[str] | None = None, /) -> int:
     """Run main.
 

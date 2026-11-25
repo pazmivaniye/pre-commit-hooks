@@ -28,11 +28,16 @@ repos:
       - id: dead
         name: dead
         description: Check for unused code
-        entry: dead
+        entry: bash
         language: system
         pass_filenames: false
         types:
           - python
+        args:
+           - -c
+           - >-
+             err=0; for n in */*.py; do dead --files "^$n$" || err=1; done; exit
+             "$err"
       - id: mypy
         name: mypy
         description: Run type checker
@@ -43,7 +48,7 @@ repos:
           - python
         args:
           - --python-version
-          - "3.14"
+          - '3.14'
           - --strict
           - --follow-untyped-imports
           - test
