@@ -3,6 +3,7 @@
 
 __all__ = ['main']
 
+import signal as _signal
 import sys as _sys
 import typing as _typing
 
@@ -79,7 +80,6 @@ def main(args: _typing.Sequence[str] | None = None, /) -> int:
     return int(failed)
 
 if __name__ == '__main__':
-    if _sys.platform != 'win32':
-        import signal
-        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+    if hasattr(_signal, 'SIGPIPE'):
+        _signal.signal(_signal.SIGPIPE, _signal.SIG_DFL)
     _sys.exit(main())
